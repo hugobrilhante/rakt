@@ -3,3 +3,7 @@
 
 # Ruff
 .ruff_cache
+
+# Envs
+.env
+.venv
