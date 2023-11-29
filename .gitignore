@@ -7,3 +7,6 @@
 # Envs
 .env
 .venv
+
+# Staticfiles
+staticfiles
