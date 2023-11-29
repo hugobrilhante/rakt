@@ -8,7 +8,11 @@ packages = [{include = "rakt", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+django = "^4.2.7"
 
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.5.0"
 
 [build-system]
 requires = ["poetry-core"]
