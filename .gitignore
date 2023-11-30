@@ -10,3 +10,6 @@
 
 # Staticfiles
 staticfiles
+
+# Logs
+logs

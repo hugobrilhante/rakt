@@ -148,3 +148,29 @@ class Prod(Base):
     CSRF_COOKIE_SECURE = True
     # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/#session-cookie-secure
     SESSION_COOKIE_SECURE = True
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "json": {
+                "()": "logging.Formatter",
+                "format": '{"loggerName":"%(name)s","timestamp":"%(asctime)s","severity":"%(levelname)s","message":"%(message)s"}',
+            },
+        },
+        "handlers": {
+            "file": {
+                "level": "INFO",
+                "class": "logging.FileHandler",
+                "filename": "logs/info.log",
+                "formatter": "json",
+            },
+        },
+        "loggers": {
+            "": {
+                "handlers": ["file"],
+                "level": "INFO",
+                "propagate": True,
+            },
+        },
+    }

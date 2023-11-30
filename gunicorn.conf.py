@@ -15,8 +15,41 @@ threads = 4
 # Timeout for requests
 timeout = 30
 
-# Log file directed to standard output (stdout)
-log_file = "-"
-
 # Worker temporary directory for better performance
 worker_tmp_dir = "/dev/shm"
+
+# Log for access and error
+logconfig_dict = {
+    "version": 1,
+    "formatters": {
+        "json": {
+            "()": "logging.Formatter",
+            "format": '{"loggerName":"%(name)s","timestamp":"%(asctime)s","severity":"%(levelname)s","message":"%(message)s"}',
+        },
+    },
+    "handlers": {
+        "access": {
+            "class": "logging.FileHandler",
+            "filename": "logs/access.log",
+            "formatter": "json",
+        },
+        "error": {
+            "class": "logging.FileHandler",
+            "filename": "logs/error.log",
+            "formatter": "json",
+        },
+    },
+    "root": {"level": "INFO", "handlers": []},
+    "loggers": {
+        "gunicorn.access": {
+            "level": "INFO",
+            "handlers": ["access"],
+            "propagate": False,
+        },
+        "gunicorn.error": {
+            "level": "INFO",
+            "handlers": ["error"],
+            "propagate": False,
+        },
+    },
+}
