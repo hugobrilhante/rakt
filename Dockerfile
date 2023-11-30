@@ -17,6 +17,17 @@ ENV PYTHONUNBUFFERED=1
 # Required for the djnago-configuration library
 ENV DJANGO_SETTINGS_MODULE "src.settings"
 
+# Update the system and install necessary dependencies
+RUN apt-get update && apt-get install -y \
+    binutils \
+    libproj-dev \
+    gdal-bin \
+    libgdal-dev
+
+# Set environment variables for GDAL
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
+
 WORKDIR /app
 
 # Create a non-privileged user that the app will run under.

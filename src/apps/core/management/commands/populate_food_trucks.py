@@ -3,6 +3,7 @@ from django.core.management.base import BaseCommand
 
 from src.apps.core.models import FoodTruck
 
+# Mapping between CSV column names and model field names
 FIELDS_MAPPING = {
     "locationid": "location_id",
     "Applicant": "applicant",
@@ -27,7 +28,7 @@ FIELDS_MAPPING = {
     "Received": "received",
     "PriorPermit": "prior_permit",
     "ExpirationDate": "expiration_date",
-    "Location": "location_info",
+    "Location": "location",
     "Fire Prevention Districts": "fire_prevention_districts",
     "Police Districts": "police_districts",
     "Supervisor Districts": "supervisor_districts",
@@ -42,18 +43,26 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("csv_path", type=str, help="Path to the CSV file")
 
+    # Define the main logic of the command to handle the CSV data
     def handle(self, *args, **options):
+        # Retrieve the path to the CSV file provided as a command-line argument
         csv_path = options["csv_path"]
-        food_trucks_to_create = []
+
+        # Open the CSV file and read its contents as a dictionary
         with open(csv_path, "r") as file:
+            # Use DictReader to read the CSV file as a dictionary
             reader = csv.DictReader(file)
+
+            # Iterate through each row in the CSV file
             for row in reader:
+                # Map CSV column names to model field names using the defined mapping
                 mapped_data = {
                     model_field: row[csv_field]
                     for csv_field, model_field in FIELDS_MAPPING.items()
                 }
-                food_truck = FoodTruck(**mapped_data)
-                food_trucks_to_create.append(food_truck)
-        batch_size = 100
-        FoodTruck.objects.bulk_create(food_trucks_to_create, batch_size=batch_size)
+
+                # Create a new FoodTruck object using the mapped data and save it to the database
+                FoodTruck.objects.create(**mapped_data)
+
+        # Display a success message after importing the data
         self.stdout.write(self.style.SUCCESS("Data imported successfully"))

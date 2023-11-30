@@ -39,6 +39,7 @@ class Base(Configuration):
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
+        "django.contrib.gis",
         # App locals
         "src.apps.core.apps.CoreConfig",
     ]
@@ -130,6 +131,9 @@ class Base(Configuration):
     # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
     DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+    # See https://docs.djangoproject.com/en/4.2/ref/contrib/gis/install/geolibs/#geos-library-path
+    GDAL_LIBRARY_PATH = "/usr/lib/libgdal.so"
 
 
 class Dev(Base):

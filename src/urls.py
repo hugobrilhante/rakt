@@ -17,6 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from src.apps.core.views import NearestFoodTrucksView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path(
+        "nearest-food-trucks/",
+        NearestFoodTrucksView.as_view(),
+        name="nearest-food-trucks",
+    ),
 ]

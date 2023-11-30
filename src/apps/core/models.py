@@ -1,4 +1,5 @@
-from django.db import models
+from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 
 
 class FoodTruck(models.Model):
@@ -25,7 +26,7 @@ class FoodTruck(models.Model):
     received = models.CharField(max_length=255)
     prior_permit = models.CharField(max_length=255)
     expiration_date = models.CharField(max_length=255)
-    location_info = models.CharField(max_length=255)
+    location = models.PointField()
     fire_prevention_districts = models.CharField(max_length=255)
     police_districts = models.CharField(max_length=255)
     supervisor_districts = models.CharField(max_length=255)
@@ -34,3 +35,8 @@ class FoodTruck(models.Model):
 
     def __str__(self):
         return f"{self.facility_type} - {self.latitude}, {self.longitude} "
+
+    def save(self, *args, **kwargs):
+        if self.latitude and self.longitude:
+            self.location = Point(float(self.longitude), float(self.latitude))
+        super().save(*args, **kwargs)

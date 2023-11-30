@@ -17,6 +17,3 @@ class PopulateFoodTrucksCommandTest(TestCase):
         call_command("populate_food_trucks", self.csv_file_path)
         expected_number_of_objects = 5
         self.assertEqual(FoodTruck.objects.count(), expected_number_of_objects)
-
-    def tearDown(self):
-        FoodTruck.objects.all().delete()
