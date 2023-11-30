@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
+from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import FoodTruck
@@ -11,6 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 class NearestFoodTrucksView(APIView):
+    renderer_classes = [JSONRenderer]
+
     def get(self, request):
         try:
             # Extract latitude and longitude from the query parameters

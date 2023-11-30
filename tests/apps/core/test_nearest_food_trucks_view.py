@@ -1,12 +1,13 @@
 from django.contrib.gis.geos import Point
 from django.urls import reverse
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 
 from src.apps.core.models import FoodTruck
 
 
 class NearestFoodTrucksViewTests(APITestCase):
     def setUp(self):
+        self.client = APIClient()
         self.url = reverse("nearest-food-trucks")
         FoodTruck.objects.create(
             applicant="Test Truck 1",
