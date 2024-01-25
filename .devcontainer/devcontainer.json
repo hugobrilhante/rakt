@@ -7,7 +7,6 @@
 
 	"service": "server",
 
-	"workspaceFolder": "app/",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
-    "containerUser": "root"
 }
